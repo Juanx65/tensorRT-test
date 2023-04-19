@@ -1,0 +1,4 @@
+data/*
+env/*
+weights/*
+__pycache__/*
