@@ -36,7 +36,7 @@ def parse_args():
 
 
 def main(args):
-    model = resnet50(10)
+    model = resnet50(10)# donde 10 es el numero de clases
     model.to(args.device)
     model.load_state_dict(torch.load(args.weights))
     model.eval()
