@@ -10,6 +10,8 @@ from torchvision import datasets
 from torchvision import transforms
 from torch.utils.data import DataLoader
 
+os.environ['CUDA_MODULE_LOADING'] = 'LAZY'
+
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
 BATCH_SIZE = 128

@@ -30,7 +30,7 @@ lo que da como resultado un archvo `.engine`
 Luego, seguir los paso en `mnist.ipynb` o bien en `evalRT.py` para evaluar el modelo generado por TensorRT sobre la data de prueba. 
 
 # comparaciones
-
+## pendiente: implementar int8 usando el ejemplo en refs
 ## sistema usado para hacer las evaluaciones:
 
 * OS: Ubuntu 22.04.2 LTS
@@ -48,6 +48,8 @@ se usa el programa en `compare.py` para evaluar los timepos de ejecucion entre a
     Tiempo promedio del evalRT: 1.76 segundos (fp16 y seg)
 
 # REFS
+* TensorRT python : `https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#python_topics`
 * mnist resnet50: `https://github.com/rasbt/deeplearning-models/blob/master/pytorch_ipynb/cnn/cnn-resnet50-mnist.ipynb`
 * resnet50: `https://pytorch.org/docs/0.4.0/_modules/torchvision/models/resnet.html`
 * TensorRT functions: `https://github.com/triple-Mu/YOLOv8-TensorRT`
+* TensorRT INT8 Example: `https://github.com/srihari-humbarwadi/retinanet-tensorflow2.x/tree/dfff5019ad515dda5c4753343c970d97af494f60/retinanet/tensorrt`

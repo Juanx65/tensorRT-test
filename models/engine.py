@@ -18,8 +18,7 @@ class EngineBuilder:
             self,
             checkpoint: Union[str, Path],
             device: Optional[Union[str, int, torch.device]] = None) -> None:
-        checkpoint = Path(checkpoint) if isinstance(checkpoint,
-                                                    str) else checkpoint
+        checkpoint = Path(checkpoint) if isinstance(checkpoint,str) else checkpoint
         assert checkpoint.exists() and checkpoint.suffix in ('.onnx', '.pkl')
         self.api = checkpoint.suffix == '.pkl'
         if isinstance(device, str):
@@ -31,15 +30,17 @@ class EngineBuilder:
         self.device = device
 
     def __build_engine(self,
-                       fp16: bool = True,
+                       fp32: bool = True,
+                       fp16: bool = False,
+                       int8: bool = False,
                        input_shape: Union[List, Tuple] = (128,1, 28, 28),
                        with_profiling: bool = True) -> None:
         logger = trt.Logger(trt.Logger.WARNING)
         trt.init_libnvinfer_plugins(logger, namespace='')
         builder = trt.Builder(logger)
         config = builder.create_builder_config()
-        config.max_workspace_size = torch.cuda.get_device_properties(
-            self.device).total_memory
+        config.max_workspace_size = torch.cuda.get_device_properties(self.device).total_memory
+
         flag = (1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
         network = builder.create_network(flag)
 
@@ -50,8 +51,14 @@ class EngineBuilder:
             self.build_from_api(fp16, input_shape)
         else:
             self.build_from_onnx()
-        if fp16 and self.builder.platform_has_fast_fp16:
-            config.set_flag(trt.BuilderFlag.FP16)
+
+        if ~fp32:
+            if fp16 and self.builder.platform_has_fast_fp16:
+                config.set_flag(trt.BuilderFlag.FP16)
+            if int8 and self.builder.platform_has_fast_int8:
+                config.int8_calibrator = self._calibrator
+                config.set_flag(trt.BuilderFlag.INT8)
+    
         self.weight = self.checkpoint.with_suffix('.engine')
 
         if with_profiling:
@@ -63,11 +70,12 @@ class EngineBuilder:
             f'Save in {str(self.weight.absolute())}')
 
     def build(self,
-              fp16: bool = True,
+              fp32: bool = True,
+              fp16: bool = False,
+              int8: bool = False,
               input_shape: Union[List, Tuple] = (128, 1, 28, 28),
               with_profiling=True) -> None:
-        self.__build_engine(fp16, input_shape,
-                            with_profiling)
+        self.__build_engine(fp32, fp16, int8, input_shape, with_profiling)
 
     def build_from_onnx(self):
         parser = trt.OnnxParser(self.network, self.logger)

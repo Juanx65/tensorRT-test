@@ -2,3 +2,5 @@ data/*
 env/*
 weights/*
 __pycache__/*
+models/*pyc
+*.profout
