@@ -1,5 +1,6 @@
 from models import engine
 import argparse
+import time
 
 import torch
 
@@ -35,17 +36,23 @@ def compute_accuracy(model, data_loader, device):
     return correct_pred.float()/num_examples * 100
 
 def main(args: argparse.Namespace) -> None:
-    device = torch.device(args.device)
 
+    #start_time = time.time()
+
+    device = torch.device(args.device)
     engine_path = os.path.join(current_directory,args.engine)
     Engine = engine.TRTModule(engine_path, device)
     H, W = Engine.inp_info[0].shape[-2:]
 
     # set desired output names order
     Engine.set_desired(['logits', 'probas'])
-    
+
     with torch.set_grad_enabled(False): # save memory during inference
-        print('Test accuracy: %.2f%%' % (compute_accuracy(Engine, test_loader, device='cuda:0')))
+        compute_accuracy(Engine, test_loader, device='cuda:0')
+        #print('Test accuracy: %.2f%%' % (compute_accuracy(Engine, test_loader, device='cuda:0')))
+
+    #end_time = time.time()
+    #print("Elapsed time: {:.2f} seconds".format(end_time - start_time))
 
 
 def parse_args() -> argparse.Namespace:

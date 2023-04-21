@@ -1,5 +1,6 @@
 import os
 import argparse
+import time
 
 import torch
 from torch.utils.data import DataLoader
@@ -55,6 +56,8 @@ def compute_accuracy(model, data_loader, device):
 
 def main(args: argparse.Namespace) -> None:
     
+    #start_time = time.time()
+
     # Crear una instancia del modelo con la misma arquitectura
     model = resnet50(NUM_CLASSES)
     model.to(DEVICE)
@@ -64,7 +67,11 @@ def main(args: argparse.Namespace) -> None:
 
     # Cambiar el modelo a eval() para usarlo en inferencia
     with torch.set_grad_enabled(False): # save memory during inference
-        print('Test accuracy: %.2f%%' % (compute_accuracy(model, test_loader, device=args.device)))
+        compute_accuracy(model, test_loader, device=args.device)
+        #print('Test accuracy: %.2f%%' % (compute_accuracy(model, test_loader, device=args.device)))
+    
+    #end_time = time.time()
+    #print("Elapsed time: {:.2f} seconds".format(end_time - start_time))
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
