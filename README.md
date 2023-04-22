@@ -39,13 +39,16 @@ Luego, seguir los paso en `mnist.ipynb` o bien en `evalRT.py` para evaluar el mo
 * RAM: 32,0 GiB 3200 MHz
 
 ## resultados
-se usa el programa en `compare.py` para evaluar los timepos de ejecucion entre ambos modelos
+se usa el programa en `compare.py` ( realiza 1000 iteraciones) para evaluar los timepos de ejecucion entre los modelos
 
-* 100 iteraciones
 
-    Tiempo promedio de eval: 5.04 segundos
+|             | size MB | Time avg s  |Time min s|Time max s| accuracy %|
+|-------------|---------|-------------|----------|----------|-----------|
+| no RT       | 94.4    | 5.04        |5.00      |5.39      |98.46      |
+| fp32 (RT)   | 96.6    | 1.89        |1.86      |1.99      |98.53      |
+| fp16        | 49.1    | 1.76        |1.72      |2.01      |98.53      |
+| int8        | -       | -           |-         |-         | -         |
 
-    Tiempo promedio del evalRT: 1.76 segundos (fp16 y seg)
 
 # REFS
 * TensorRT python : `https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#python_topics`
