@@ -8,7 +8,8 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision import transforms
 
-from models.mnist_resnet50 import resnet50
+from models.mnist_resnet import resnet50
+from models.mnist_resnet import resnet18
 
 
 if torch.cuda.is_available():
@@ -59,7 +60,14 @@ def main(args: argparse.Namespace) -> None:
     #start_time = time.time()
 
     # Crear una instancia del modelo con la misma arquitectura
-    model = resnet50(NUM_CLASSES)
+    if (args.resnet == 'resnet18'):
+        model = resnet18(NUM_CLASSES)
+    elif (args.resnet == 'resnet50'):
+        model = resnet50(NUM_CLASSES)
+    else:
+        print('Elige un modelo valido')
+        return
+
     model.to(DEVICE)
 
     # Cargar los pesos del modelo
@@ -79,6 +87,10 @@ def parse_args() -> argparse.Namespace:
                         type=str,
                         default='weights/mnist.pth',
                         help='weights file')
+    parser.add_argument('--resnet', 
+                        type=str,
+                        default='resnet18',
+                        help='resnet18 or resnet50')
     parser.add_argument('--device',
                         type=str,
                         default='cuda:0',

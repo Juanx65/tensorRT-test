@@ -4,7 +4,8 @@ from io import BytesIO
 import onnx
 import torch
 
-from models.mnist_resnet50 import resnet50
+from models.mnist_resnet import resnet50
+from models.mnist_resnet import resnet18
 
 
 def parse_args():
@@ -14,6 +15,11 @@ def parse_args():
                         type=str,
                         required=True,
                         help='PyTorch resnet50 weights')
+    parser.add_argument('--resnet',
+                        type=str,
+                        default='resnet18',
+                        required=True,
+                        help='resnet18 or resnet50')
     parser.add_argument('--opset',
                         type=int,
                         default=11,
@@ -31,12 +37,19 @@ def parse_args():
                         default='cuda:0',
                         help='Export ONNX device')
     args = parser.parse_args()
-    #assert len(args.input_shape) == 4
+    assert len(args.input_shape) == 4
     return args
 
 
 def main(args):
-    model = resnet50(10)# donde 10 es el numero de clases
+    if(args.resnet == 'resnet18'):
+        model = resnet18(10)# donde 10 es el numero de clases
+    elif(args.resnet == 'resnet50'):
+        model = resnet50(10)
+    else:
+        print('modelo no valido')
+        return
+    
     model.to(args.device)
     model.load_state_dict(torch.load(args.weights))
     model.eval()

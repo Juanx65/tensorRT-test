@@ -49,6 +49,10 @@ se usa el programa en `compare.py` ( realiza 1000 iteraciones) para evaluar los 
 | fp16        | 49.1    | 1.76        |1.72      |2.01      |98.53      |
 | int8        | -       | -           |-         |-         | -         |
 
+## Pendientes
+
+* converit a int8 usando tensorRT para comparar
+* implementar en fpga usando hls4ml ( no fue posible debido a que no se puede implementar una maxpool2d )
 
 # REFS
 * TensorRT python : `https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#python_topics`
