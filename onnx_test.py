@@ -51,7 +51,7 @@ def main(args):
         return
     
     model.to(args.device)
-    model.load_state_dict(torch.load(args.weights))
+    model.load_state_dict(torch.load(args.weights), strict=False)
     model.eval()
     fake_input = torch.randn(args.input_shape).to(args.device)
     for _ in range(2):

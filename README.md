@@ -60,3 +60,4 @@ se usa el programa en `compare.py` ( realiza 1000 iteraciones) para evaluar los 
 * resnet50: `https://pytorch.org/docs/0.4.0/_modules/torchvision/models/resnet.html`
 * TensorRT functions: `https://github.com/triple-Mu/YOLOv8-TensorRT`
 * TensorRT INT8 Example: `https://github.com/srihari-humbarwadi/retinanet-tensorflow2.x/tree/dfff5019ad515dda5c4753343c970d97af494f60/retinanet/tensorrt`
+* To solve load_state_dict `problem: https://stackoverflow.com/questions/54058256/runtimeerror-errors-in-loading-state-dict-for-resnet`

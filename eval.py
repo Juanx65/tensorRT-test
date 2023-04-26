@@ -71,7 +71,7 @@ def main(args: argparse.Namespace) -> None:
     model.to(DEVICE)
 
     # Cargar los pesos del modelo
-    model.load_state_dict(torch.load(args.weights))
+    model.load_state_dict(torch.load(current_directory + '/' +  args.weights),  strict=False)
 
     # Cambiar el modelo a eval() para usarlo en inferencia
     with torch.set_grad_enabled(False): # save memory during inference
@@ -85,7 +85,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', 
                         type=str,
-                        default='weights/mnist.pth',
+                        default='weights/mnist18.pth',
                         help='weights file')
     parser.add_argument('--resnet', 
                         type=str,
