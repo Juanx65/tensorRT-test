@@ -1,4 +1,4 @@
-# Resnet50 MNIST, TensorRT tests
+# ResNet50/Resnet18 MNIST, TensorRT and HLS4ML tests
 
 ## Entrenar y evaluar Resnet50 MNIST:
 
