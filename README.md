@@ -1,6 +1,6 @@
-# ResNet50/Resnet18 MNIST, TensorRT and HLS4ML tests
+# ResNet50/ResNet18 MNIST, TensorRT and HLS4ML tests
 
-## Entrenar y evaluar Resnet50 MNIST:
+## Entrenar y evaluar la red con dataset MNIST:
 
 Seguir el codigo: `mnist.ipynb`
 
@@ -27,7 +27,7 @@ lo que da como resultado un archvo `.engine`
 
 ## evaluar modelo en TensorRT
 
-Luego, seguir los paso en `mnist.ipynb` o bien en `evalRT.py` para evaluar el modelo generado por TensorRT sobre la data de prueba. 
+Luego, seguir los paso en `mnistRT.ipynb` o bien en `evalRT.py` para evaluar el modelo generado por TensorRT sobre la data de prueba. 
 
 # comparaciones
 ## pendiente: implementar int8 usando el ejemplo en refs
@@ -53,6 +53,7 @@ se usa el programa en `compare.py` ( realiza 1000 iteraciones) para evaluar los 
 
 * converit a int8 usando tensorRT para comparar
 * implementar en fpga usando hls4ml ( no fue posible debido a que no se puede implementar una maxpool2d )
+  obs: ahora se genero de cero la red usando keras, permitiendo la generacion de codigo con hls4ml, pero el proceso ahora falla en la cosimulacion
 
 # REFS
 * TensorRT python : `https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#python_topics`
